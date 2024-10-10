@@ -27,3 +27,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Archivo de configuración que contiene la API key
+src/resources/config.properties
