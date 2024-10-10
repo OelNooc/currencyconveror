@@ -1,8 +1,5 @@
 package com.oelnooc.currencyconversor.data.model;
 
-/**
- * Enum que representa los tipos de moneda soportados por la API de Exchange Rate.
- */
 public enum CurrencyType {
     AED("AED", "United Arab Emirates Dirham"),
     AFN("AFN", "Afghan Afghani"),
@@ -169,42 +166,19 @@ public enum CurrencyType {
     private final String code;
     private final String description;
 
-    /**
-     * Constructor del enum.
-     *
-     * @param code        Código de la moneda (ISO 4217).
-     * @param description Descripción completa de la moneda.
-     */
     CurrencyType(String code, String description) {
         this.code = code;
         this.description = description;
     }
 
-    /**
-     * Obtiene el código de la moneda.
-     *
-     * @return Código de la moneda.
-     */
     public String getCode() {
         return code;
     }
 
-    /**
-     * Obtiene la descripción de la moneda.
-     *
-     * @return Descripción de la moneda.
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * Obtiene una instancia de CurrencyType a partir de un código de moneda.
-     *
-     * @param code Código de la moneda (case-insensitive).
-     * @return Instancia de CurrencyType correspondiente al código.
-     * @throws IllegalArgumentException Si el código no corresponde a ninguna moneda del enum.
-     */
     public static CurrencyType fromCode(String code) {
         for (CurrencyType currency : CurrencyType.values()) {
             if (currency.code.equalsIgnoreCase(code)) {
@@ -214,11 +188,6 @@ public enum CurrencyType {
         throw new IllegalArgumentException("Código de moneda inválido: " + code);
     }
 
-    /**
-     * Retorna una representación amigable de la moneda.
-     *
-     * @return Descripción completa de la moneda.
-     */
     @Override
     public String toString() {
         return code + " - " + description;

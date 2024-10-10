@@ -14,19 +14,11 @@ public class Menu {
     private final Scanner scanner;
     private final Request request;
 
-    /**
-     * Constructor que inicializa el Scanner y la instancia Singleton de Request.
-     *
-     * @throws IOException Si hay un error al inicializar la instancia de Request.
-     */
     public Menu() throws IOException {
         this.scanner = new Scanner(System.in);
         this.request = Request.getInstance();
     }
 
-    /**
-     * Método principal para ejecutar el menú.
-     */
     public void run() {
         while (true) {
             displayMenu();
@@ -52,9 +44,6 @@ public class Menu {
         }
     }
 
-    /**
-     * Muestra el menú de opciones al usuario.
-     */
     private void displayMenu() {
         System.out.println("\n--- Menú de Conversor de Monedas ---");
         System.out.println("1. Conocer las monedas disponibles");
@@ -64,25 +53,16 @@ public class Menu {
         System.out.print("Ingresa tu opción (1-4): ");
     }
 
-    /**
-     * Obtiene la opción seleccionada por el usuario.
-     *
-     * @return número de opción
-     */
     private int getUserChoice() {
         int choice = -1;
         String input = scanner.nextLine().trim();
         try {
             choice = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            // Opción inválida, se manejará en el switch-case
         }
         return choice;
     }
 
-    /**
-     * Lista todas las monedas disponibles utilizando el enum CurrencyType.
-     */
     private void listAvailableCurrencies() {
         System.out.println("\n--- Lista de Monedas Disponibles ---");
         for (CurrencyType currency : CurrencyType.values()) {
@@ -90,32 +70,23 @@ public class Menu {
         }
     }
 
-    /**
-     * Muestra la tasa de conversión desde una moneda a otra, incluyendo la fecha y hora de la consulta.
-     */
     private void showConversionRate() {
         try {
             System.out.println("\n--- Consultar Tasa de Conversión ---");
-            // Seleccionar moneda base (origen)
             CurrencyType baseCurrency = selectCurrency("base");
 
-            // Seleccionar moneda destino
             CurrencyType destinationCurrency = selectCurrency("destino");
 
-            // Obtener las tasas de cambio
             Currency currencyData = request.fetchExchangeRates(baseCurrency);
 
-            // Obtener la tasa de conversión
             Double rate = currencyData.getRate(destinationCurrency);
             if (rate == null) {
                 System.out.println("No se encontró la tasa de conversión para " + destinationCurrency.getCode());
                 return;
             }
 
-            // Obtener la fecha y hora de la última actualización
             String updateTime = formatUpdateTime(currencyData.getTime_last_update_unix());
 
-            // Mostrar la tasa de conversión
             System.out.printf("A las %s, la tasa de %s a %s es de %.4f%n",
                     updateTime,
                     baseCurrency.getCode(),
@@ -126,38 +97,27 @@ public class Menu {
         }
     }
 
-    /**
-     * Realiza la conversión de una cantidad de una moneda a otra.
-     */
     private void performCurrencyConversion() {
         try {
             System.out.println("\n--- Realizar Conversión de Moneda ---");
-            // Seleccionar moneda base (origen)
             CurrencyType baseCurrency = selectCurrency("base");
 
-            // Seleccionar moneda destino
             CurrencyType destinationCurrency = selectCurrency("destino");
 
-            // Solicitar cantidad a convertir
             double amount = getAmountToConvert();
 
-            // Obtener las tasas de cambio
             Currency currencyData = request.fetchExchangeRates(baseCurrency);
 
-            // Obtener la tasa de conversión
             Double rate = currencyData.getRate(destinationCurrency);
             if (rate == null) {
                 System.out.println("No se encontró la tasa de conversión para " + destinationCurrency.getCode());
                 return;
             }
 
-            // Calcular el monto convertido
             double convertedAmount = amount * rate;
 
-            // Obtener la fecha y hora de la última actualización
             String updateTime = formatUpdateTime(currencyData.getTime_last_update_unix());
 
-            // Mostrar el resultado de la conversión
             System.out.printf("A las %s, %.2f %s = %.2f %s%n",
                     updateTime,
                     amount,
@@ -169,12 +129,6 @@ public class Menu {
         }
     }
 
-    /**
-     * Solicita al usuario que seleccione una moneda.
-     *
-     * @param type Tipo de selección ("base" o "destino")
-     * @return CurrencyType seleccionado
-     */
     private CurrencyType selectCurrency(String type) {
         CurrencyType currency = null;
         while (currency == null) {
@@ -189,11 +143,6 @@ public class Menu {
         return currency;
     }
 
-    /**
-     * Solicita al usuario que ingrese una cantidad válida para convertir.
-     *
-     * @return cantidad a convertir
-     */
     private double getAmountToConvert() {
         double amount = 0;
         boolean valid = false;
@@ -214,12 +163,6 @@ public class Menu {
         return amount;
     }
 
-    /**
-     * Formatea la fecha y hora de actualización a partir del timestamp Unix.
-     *
-     * @param unixTimeString Tiempo en formato Unix.
-     * @return Fecha y hora formateadas en zona horaria local.
-     */
     private String formatUpdateTime(String unixTimeString) {
         try {
             long unixTime = Long.parseLong(unixTimeString);
@@ -228,7 +171,7 @@ public class Menu {
                     .withZone(ZoneId.systemDefault());
             return formatter.format(instant);
         } catch (Exception e) {
-            return "Fecha y hora desconocidas"; // Retornar un mensaje por defecto si hay error
+            return "Fecha y hora desconocidas";
         }
     }
 }

@@ -13,8 +13,6 @@ public class Currency {
     private String base_code;
     private Map<String, Double> conversion_rates;
 
-    // Getters y Setters
-
     public String getResult() {
         return result;
     }
@@ -87,7 +85,6 @@ public class Currency {
         this.conversion_rates = conversion_rates;
     }
 
-    // Método para obtener la tasa de cambio de una moneda específica
     public Double getRate(CurrencyType currencyType) {
         if (conversion_rates != null) {
             return conversion_rates.get(currencyType.getCode());
