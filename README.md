@@ -28,7 +28,7 @@ El proyecto está organizado de la siguiente manera:
 1. Clona este repositorio en tu máquina local:
 
     ```bash
-    git clone https://github.com/tuusuario/currency-conversor.git
+    git clone https://github.com/OelNooc/currencyconveror.git
     ```
 
 2. Instala las dependencias necesarias (asegúrate de que tienes GSON y Java 11 instalados).
